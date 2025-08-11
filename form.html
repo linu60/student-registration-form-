@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Registration</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function handleFormSubmit(event) {
+      event.preventDefault();
+
+      let isValid = true;
+      document.querySelectorAll('.error').forEach(el => el.textContent = '');
+
+      const name = document.forms["studentForm"]["name"].value.trim();
+      const reg = document.forms["studentForm"]["reg"].value.trim();
+      const dob = document.forms["studentForm"]["dob"].value;
+      const course = document.forms["studentForm"]["course"].value;
+      const gender = document.querySelector('input[name="gender"]:checked');
+
+      if (name === "") {
+        document.getElementById("nameError").textContent = "Name is required";
+        isValid = false;
+      }
+
+      if (reg === "") {
+        document.getElementById("regError").textContent = "Registration number is required";
+        isValid = false;
+      }
+
+      if (dob === "") {
+        document.getElementById("dobError").textContent = "Date of birth is required";
+        isValid = false;
+      }
+
+      if (course === "") {
+        document.getElementById("courseError").textContent = "Please select a course";
+        isValid = false;
+      }
+
+      if (!gender) {
+        document.getElementById("genderError").textContent = "Please select gender";
+        isValid = false;
+      }
+
+      if (isValid) {
+        if (confirm("Details will be submitted")) {
+          event.target.submit();
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[url('bg.avif')] bg-cover flex items-center justify-center min-h-screen">
+  <form name="studentForm" action="submit.php" method="POST" onsubmit="handleFormSubmit(event)" class="bg-slate-400 shadow-md rounded-xl p-8 w-full max-w-md space-y-4">
+    <h2 class="text-xl font-extrabold text-center text-black-800">Student Registration</h2>
+
+    <div>
+      <input type="text" name="name" placeholder="Name" class="w-full border p-2 rounded-md">
+      <p id="nameError" class="error text-red-600 text-sm mt-1"></p>
+    </div>
+
+    <div>
+      <input type="text" name="reg" placeholder="Registration Number" class="w-full border p-2 rounded-md">
+      <p id="regError" class="error text-red-600 text-sm mt-1"></p>
+    </div>
+
+    <div>
+      <input type="date" name="dob" class="w-full border p-2 rounded-md">
+      <p id="dobError" class="error text-red-600 text-sm mt-1"></p>
+    </div>
+
+    <div>
+      <select name="course" class="w-full border p-2 rounded-md">
+        <option value="">Select Course</option>
+        <option value="B.E">B.E</option>
+        <option value="B.Tech">B.Tech</option>
+        <option value="B.Sc">B.Sc</option>
+        <option value="MBA">MBA</option>
+      </select>
+      <p id="courseError" class="error text-red-600 text-sm mt-1"></p>
+    </div>
+
+    <div>
+      <div class="flex items-center gap-4">
+        <label><input type="radio" name="gender" value="Male"> Male</label>
+        <label><input type="radio" name="gender" value="Female"> Female</label>
+        <label><input type="radio" name="gender" value="Other"> Other</label>
+      </div>
+      <p id="genderError" class="error text-red-600 text-sm mt-1"></p>
+    </div>
+
+    <div class="flex justify-between mt-4">
+      <button type="submit" class="bg-slate-500 text-white px-4 py-2 rounded hover:bg-slate-900">Submit</button>
+      <a href="view.php" class="bg-slate-500 text-white px-4 py-2 rounded hover:bg-slate-900">View</a>
+    </div>
+  </form>
+</body>
+</html>
+
